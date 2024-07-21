@@ -1,1 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock, Paper, Scissors Game!</title>
+</head>
+<body>
+    
+    <script>
+        
+        function getComputerChoice() {
+            const computerInput = Math.floor(Math.random()*3);
+            let computerChoice;
+            switch (computerInput) {
+                case 0: computerChoice = 'rock'; break;
+                case 1: computerChoice = 'paper'; break;
+                case 2: computerChoice = 'scissors'; break;  
+            };
+            return computerChoice; 
+        }
+        // getComputerChoice();
 
+        function getHumanChoice() {
+            humanChoice = prompt('Rock, paper, or scissors?', '').toLowerCase();
+            switch (humanChoice) {
+                case 'rock': 
+                case 'paper': 
+                case 'scissors': return humanChoice;
+                // dùng return thay cho break ok
+                default: 
+                console.log('Please enter rock or paper or scissors only!');
+                break;
+            };
+        }
+        // getHumanChoice();
+        // phải commented out hai dòng function call này vì khi chạy sẽ thành 6 round
+        
+        let humanScore = 0;
+        let computerScore = 0;
+
+        function playGame() {
+            function playRound(humanChoice, computerChoice) {
+                if (humanChoice === computerChoice) {
+                    console.log("It's a tie!");
+                    computerScore++;
+                    humanScore++;
+                } else if (
+                    (humanChoice === 'rock' && computerChoice === 'paper') || 
+                    (humanChoice === 'paper' && computerChoice === 'scissors') ||
+                    (humanChoice === 'scissors' && computerChoice === 'rock')
+                    ) {
+                    console.log(`You lose! ${computerChoice} beats ${humanChoice}.`);
+                    computerScore++;
+                } else if (
+                    (humanChoice === 'rock' && computerChoice === 'scissors') || 
+                    (humanChoice === 'paper' && computerChoice === 'rock') ||
+                    (humanChoice === 'scissors' && computerChoice === 'paper')
+                    ) {
+                    console.log(`You win! ${humanChoice} beats ${computerChoice}.`);
+                    humanScore++;
+                } else {
+                    playRound(getHumanChoice(), getComputerChoice());
+                };
+            }
+            // cũng muốn viết ít scenarios của humanChoice vs computerChoice cơ mà bắt buộc phải để case humanChoice khác paper or scissors or rock ở cuối, nếu ko thì else if chạy sau nó sẽ bị skip làm lỗi hệ thống
+
+            playRound(getHumanChoice(), getComputerChoice());
+            playRound(getHumanChoice(), getComputerChoice());
+            playRound(getHumanChoice(), getComputerChoice());
+            playRound(getHumanChoice(), getComputerChoice());
+            playRound(getHumanChoice(), getComputerChoice());
+
+            console.log(`Your score is ${humanScore}/5. Computer's score is ${computerScore}/5.`);
+            if (humanScore === computerScore) {
+                console.log("No one win or lose because it's a tie!");
+            } else if (humanScore > computerScore) {
+                console.log("You won! Congratulation!");
+            } else {
+                console.log("You lost! Try again!");
+            }
+        }
+
+        playGame();
+
+    </script>
+</body>
+</html>
